@@ -7,6 +7,7 @@ const Usuario = require('../models/usuario');
 app.get('/usuarios', (req, res) => {
     let since = req.query.since || 0;
     let quantity = req.query.quantity || 5;
+    console.log('hola prod ' + req);
     since = Number(since);
     quantity = Number(quantity);
     Usuario.find({ estado: true }, 'nombre email role estado google')
