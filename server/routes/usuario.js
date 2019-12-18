@@ -4,10 +4,11 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
 
-app.get('/usuarios', (req, res) => {
+const { verificaToken, verificaAdminRol } = require('../middlewares/autentication');
+
+app.get('/usuarios', verificaToken, (req, res) => {
     let since = req.query.since || 0;
     let quantity = req.query.quantity || 5;
-    console.log('hola prod ' + req);
     since = Number(since);
     quantity = Number(quantity);
     Usuario.find({ estado: true }, 'nombre email role estado google')
@@ -31,7 +32,7 @@ app.get('/usuarios', (req, res) => {
         })
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verificaToken, verificaAdminRol], (req, res) => {
 
     let body = req.body;
     let usuario = new Usuario({
@@ -57,7 +58,7 @@ app.post('/usuario', (req, res) => {
     });
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAdminRol], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioBD) => {
@@ -75,43 +76,23 @@ app.put('/usuario/:id', (req, res) => {
     })
 
 });
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRol], (req, res) => {
 
     let id = req.params.id;
 
     Usuario.findByIdAndUpdate(id, { estado: false }, { new: true }, (err, usuarioBD) => {
-            if (err) {
-                return res.status(400).json({
-                    ok: false,
-                    err
-                });
-            }
-
-            res.json({
-                ok: true,
-                usuario: usuarioBD
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
             });
-        })
-        // Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
-        //     if (err) {
-        //         return res.status(400).json({
-        //             ok: false,
-        //             err
-        //         });
-        //     };
-        //     if (!usuarioBorrado) {
-        //         return res.status(400).json({
-        //             ok: false,
-        //             err: {
-        //                 message: 'Usuario no encontrado'
-        //             }
-        //         });
-        //     }
-        //     res.json({
-        //         ok: true,
-        //         usuario: usuarioBorrado
-        //     });
-        // })
+        }
+
+        res.json({
+            ok: true,
+            usuario: usuarioBD
+        });
+    })
 });
 
 
