@@ -36,6 +36,9 @@ let usuarioSchema = new Schema({
         default: false
     }
 });
+
+// modifico el metodo toJSON para modificar lo que imprime el objeto, en este caso para quitar el password
+// no usar funcion de flecha
 usuarioSchema.methods.toJSON = function() {
     let user = this;
     let userObject = user.toObject();

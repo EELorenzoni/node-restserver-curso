@@ -14,7 +14,7 @@ app.get('/usuarios', verificaToken, (req, res) => {
     Usuario.find({ estado: true }, 'nombre email role estado google')
         .skip(since)
         .limit(quantity)
-        .exec((err, usuarios) => {
+        .exec((err, usuariosDB) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -25,7 +25,7 @@ app.get('/usuarios', verificaToken, (req, res) => {
             Usuario.count({ estado: true }, (err, count) => {
                 res.json({
                     ok: true,
-                    usuarios,
+                    usuariosDB,
                     conteo: count
                 })
             })
