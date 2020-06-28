@@ -18,7 +18,7 @@ app.get('/productos', verificaToken, (req, res) => {
     let quantity = req.query.quantity || 5;
     since = Number(since);
     quantity = Number(quantity);
-    Producto.find({}, 'descripcion disponible categoria precioUni usuario')
+    Producto.find({})
         .populate('usuario', 'nombre email')
         .populate('categoria', 'descripcion')
         .sort('nombre')
@@ -172,11 +172,12 @@ app.delete('/producto/:id', (req, res) => {
     // grabar el usuario
     let id = req.params.id;
 
-    Usuario.findByIdAndUpdate(id, { disponible: false }, { new: true }, (err, productoDB) => {
+    Producto.findByIdAndUpdate(id, { disponible: false }, { new: true }, (err, productoDB) => {
+
         if (err) {
             return res.status(400).json({
                 ok: false,
-                err
+                message: 'el producto no existe'
             });
         }
 
