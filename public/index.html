@@ -8,10 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Google signIn Demo</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="441694253225-0v65k9feahs2r9uk2h9isppmog6f8n2t.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="441694253225-q5tcstg9e2l3410cb73f28tksonlq1mm.apps.googleusercontent.com">
 </head>
 
 <body>
+    <!-- <img src="http://localhost:3000/imagen/productos/5ef9382f1afe54b2dbc1d832-838.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjp7InJvbGUiOiJBRE1JTl9ST0xFIiwiZXN0YWRvIjp0cnVlLCJnb29nbGUiOnRydWUsIl9pZCI6IjVlZjhjMTc3OThiMDMwM2Q2NWFhY2EzZSIsIm5vbWJyZSI6ImVkdWFyZG8gbG9yZW56b25pIiwiZW1haWwiOiJlZHVsb3JlbnpvbmkyMUBnbWFpbC5jb20iLCJpbWciOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQU9oMTRHaGZkeUJUcDVYR3oxVVU2R2RMcGEtNm5SRUR0c2JLcXhTN0dOVDR0UT1zOTYtYyIsIl9fdiI6MH0sImlhdCI6MTU5MzM5MTEyNiwiZXhwIjoxNTkzNTYzOTI2fQ.DXpPlg2hG4Gx1qiXqldmEPqgT853byA96pE4Zx3ZDu0" alt=""> -->
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
     <a href="#" onclick="signOut();">Sign out</a>
     <script>
@@ -23,7 +24,7 @@
             console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
             var id_token = googleUser.getAuthResponse().id_token;
 
-            // console.log(id_token);
+            console.log(id_token);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/google');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

@@ -24,7 +24,6 @@ app.put('/upload/:tipo/:id', function(req, res) {
                 }
             });
     }
-
     // validar tipo
     let tipoValidos = ['productos', 'usuarios'];
 

@@ -78,7 +78,7 @@ app.post('/google', async(req, res) => {
         .catch(err => {
             return res.status(403).json({
                 ok: false,
-                err: e
+                err
             });
         });
 
